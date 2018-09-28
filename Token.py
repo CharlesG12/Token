@@ -48,14 +48,18 @@ class Token:
     # build a collection of dictionary for all the files under the path
     def run(self):
         for filename in os.listdir(self.path):
+            print( filename )
+
             book_dic = self.load_file(self.path + filename)
+            print(self.path + filename)
             # for average token per book
             self.num_book += 1
             self.sum_token_book += len(book_dic)
             # merge books dict to a collection dict
-            for key, value in sorted(book_dic.items()):
+            for key, value in book_dic.items():
+                print(str(key) + " " + str(value))
                 if key not in self.collection_dic:
                     self.collection_dic[key] = [value]
-                else:
+                elif key in self.collection_dic:
                     self.collection_dic[key].append(value)
 
