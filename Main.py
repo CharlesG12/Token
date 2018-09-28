@@ -17,6 +17,7 @@ avg_token_dict = cranefill.sum_token_book / cranefill.num_book
 sum_token_dict = {}
 
 for key, value in sorted(cranefill.collection_dic.items()):
+    print(str(key) + " " + str(value))
     _sum = 0
     for v in value:
         _sum += v[1]
