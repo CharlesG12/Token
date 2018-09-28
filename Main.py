@@ -6,7 +6,7 @@ path = 'data/'
 cranefill = Token.Token(path)
 
 start_time = datetime.datetime.now()
-cranefill.run()
+cranefill.run(1)
 finish_time = datetime.datetime.now()
 
 time_spend = finish_time - start_time

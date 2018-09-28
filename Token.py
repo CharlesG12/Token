@@ -1,6 +1,7 @@
 from xml.dom import minidom
 import os
 import TokenRules
+import Stemming
 
 
 class Token:
@@ -9,6 +10,10 @@ class Token:
         self.num_book = 0
         self.sum_token_book = 0
         self.path = path
+        self.stemming = 0
+
+    def apply_stemming(self):
+        self.stemming = 1
 
     # process in stream of text based on token rules
     # store token in dictionary
@@ -20,6 +25,8 @@ class Token:
         for w in words:
             # return processed word, 0 is not a word
             processed_word = TokenRules.apply(w)
+            if self.stemming is 1:
+                processed_word = Stemming.apply_stemming(processed_word)
 
             if processed_word != 0:
                 # add new key to dictionary
@@ -46,10 +53,13 @@ class Token:
         return self.process_string(data, doc_no)
 
     # build a collection of dictionary for all the files under the path
-    def run(self):
+    # apply stemming is boolean is 1, no stemming otherwise
+    def run(self, boolean):
+        # apply stemming
+        if boolean is 1:
+            self.apply_stemming()
+        # loop through files under path
         for filename in os.listdir(self.path):
-            print( filename )
-
             book_dic = self.load_file(self.path + filename)
             print(self.path + filename)
             # for average token per book
@@ -58,8 +68,10 @@ class Token:
             # merge books dict to a collection dict
             for key, value in book_dic.items():
                 print(str(key) + " " + str(value))
+                # add token to dictionary if not exist
                 if key not in self.collection_dic:
                     self.collection_dic[key] = [value]
+                # increase the frequency by one if exist in the dictionary
                 elif key in self.collection_dic:
                     self.collection_dic[key].append(value)
 
