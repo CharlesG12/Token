@@ -5,8 +5,10 @@ import datetime
 path = 'data/'
 cranefill = Token.Token(path)
 
+cranefill.apply_stemming()
+
 start_time = datetime.datetime.now()
-cranefill.run(1)
+cranefill.run()
 finish_time = datetime.datetime.now()
 
 time_spend = finish_time - start_time

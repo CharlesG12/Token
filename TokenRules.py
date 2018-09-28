@@ -11,6 +11,7 @@ def apply(word):
     clean_word = remove_digits(clean_word)
     if is_short(clean_word) == 1:
         return 0
+    print(clean_word)
     return clean_word.lower()
 
 

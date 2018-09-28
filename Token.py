@@ -25,10 +25,12 @@ class Token:
         for w in words:
             # return processed word, 0 is not a word
             processed_word = TokenRules.apply(w)
-            if self.stemming is 1:
-                processed_word = Stemming.apply_stemming(processed_word)
-
+            # filter empty word after tokenization
             if processed_word != 0:
+                # apply stemming
+                if self.stemming == 1:
+                    processed_word = Stemming.apply_stemming(processed_word)
+
                 # add new key to dictionary
                 if w not in book_dict:
                     book_dict[processed_word] = [doc_no, 1]
@@ -54,10 +56,7 @@ class Token:
 
     # build a collection of dictionary for all the files under the path
     # apply stemming is boolean is 1, no stemming otherwise
-    def run(self, boolean):
-        # apply stemming
-        if boolean is 1:
-            self.apply_stemming()
+    def run(self):
         # loop through files under path
         for filename in os.listdir(self.path):
             book_dic = self.load_file(self.path + filename)
