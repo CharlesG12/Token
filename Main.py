@@ -1,51 +1,50 @@
 import Token
 import time
 
-# path for the docs
-path = 'data/'
-cranefill = Token.Token(path)
 
-cranefill.apply_stemming()
+class Collect:
+    def __init__(self, p):
+        self.path = p
+        self.total_words = 0
+        self.single_appear = 0
+        self.unique_words = 0
+        self.top30_words = 0
+        self.avg_word_doc = 0
+        self.seconds_elapsed = 0
+        self.collection = Token.Token(p)
+        self.sorted_dict = {}
 
-start_time = time.time()
-cranefill.run()
-end_time = time.time()
+    # turn on stemming on the process
+    def run_stemming(self):
+        self.collection.apply_stemming()
 
-seconds_elapsed = end_time - start_time
+    # time to process the collection
+    def calculate_time(self):
+        start_time = time.time()
+        self.collection.run()
+        end_time = time.time()
 
-single_appear = 0
-unique = 0
-avg_token_dict = cranefill.sum_token_book / cranefill.num_book
-sum_token_dict = {}
+        self.seconds_elapsed = end_time - start_time
 
-for key, value in sorted(cranefill.collection_dic.items()):
-    # print(str(key) + " " + str(value))
-    _sum = 0
-    for v in value:
-        _sum += v[1]
-        if v[1] == 1:
-            single_appear += 1
-            if len(value) == 1:
-                unique += 1
+    # calculate average words per document
+    def cal_avg_word_doc(self):
+        self.avg_word_doc = self.collection.sum_token_book / self.collection.num_book
 
-    sum_token_dict[key] = _sum
+    #
+    def cal_all(self):
+        self.calculate_time()
+        self.cal_avg_word_doc()
 
-sorted_dict = sorted(sum_token_dict.items(), key=lambda x: -x[1])[:30]
+        sum_token_dict = {}
+        for key, value in sorted(self.collection.collection_dic.items()):
+            _sum = 0
+            for v in value:
+                _sum += v[1]
+                if v[1] == 1:
+                    self.single_appear += 1
+                    if len(value) == 1:
+                        self.unique_words += 1
+            sum_token_dict[key] = _sum
 
+        self.sorted_dict = sorted(sum_token_dict.items(), key=lambda x: -x[1])[:30]
 
-def print_info_token():
-    print()
-    print("It took " + str(seconds_elapsed) + " seconds for token the collection")
-    print("The number of tokens in the collection: " + str(len(cranefill.collection_dic)))
-    print("The number of unique words in the collection: " + str(unique))
-    print("The number of words only appear once in the collection: " + str(single_appear))
-    print("The 30 most frequent words in the collection: ", end="", flush=True)
-
-    for key, value in sorted_dict:
-        print(str(key) + " " + str(value) + ", ", end="", flush=True)
-
-    print()
-    print("The average token per book " + str(avg_token_dict))
-
-
-print_info_token()

@@ -17,9 +17,6 @@ class Token:
 
     # process in stream of text based on token rules
     # store token in dictionary
-    # TODO: need to break this down to two part:
-    #       process words, store words to dictionary
-    #
     def process_string(self, stream, doc_no):
         # create token dictionary for the book
         book_dict = {}
@@ -41,6 +38,7 @@ class Token:
                     book_dict[processed_word] = [doc_no, book_dict[processed_word][1] + 1]
         return book_dict
 
+
     # load individual xml file to Doc NO and Text
     def load_file(self, url):
         # parse xml doc from the url
@@ -61,7 +59,7 @@ class Token:
     def run(self):
         # loop through files under path
         for filename in os.listdir(self.path):
-            print("Processing file " + str(filename))
+            # print("Processing file " + str(filename))
             book_dic = self.load_file(self.path + filename)
             # for average token per book
             self.num_book += 1
