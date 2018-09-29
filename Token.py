@@ -17,6 +17,9 @@ class Token:
 
     # process in stream of text based on token rules
     # store token in dictionary
+    # TODO: need to break this down to two part:
+    #       process words, store words to dictionary
+    #
     def process_string(self, stream, doc_no):
         # create token dictionary for the book
         book_dict = {}
@@ -30,9 +33,8 @@ class Token:
                 # apply stemming
                 if self.stemming == 1:
                     processed_word = Stemming.apply_stemming(processed_word)
-
                 # add new key to dictionary
-                if w not in book_dict:
+                if processed_word not in book_dict:
                     book_dict[processed_word] = [doc_no, 1]
                 # increment value by 1 if key exist
                 else:
@@ -59,14 +61,13 @@ class Token:
     def run(self):
         # loop through files under path
         for filename in os.listdir(self.path):
+            print("Processing file " + str(filename))
             book_dic = self.load_file(self.path + filename)
-            print(self.path + filename)
             # for average token per book
             self.num_book += 1
             self.sum_token_book += len(book_dic)
             # merge books dict to a collection dict
             for key, value in book_dic.items():
-                print(str(key) + " " + str(value))
                 # add token to dictionary if not exist
                 if key not in self.collection_dic:
                     self.collection_dic[key] = [value]
