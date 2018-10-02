@@ -20,6 +20,8 @@ class Token:
     def process_string(self, stream, doc_no):
         # create token dictionary for the book
         book_dict = {}
+        # for average token per book
+        self.num_book += 1
 
         words = stream.split()
         for w in words:
@@ -36,6 +38,8 @@ class Token:
                 # increment value by 1 if key exist
                 else:
                     book_dict[processed_word] = [doc_no, book_dict[processed_word][1] + 1]
+                # increase the sum token by 1
+                self.sum_token_book += 1
         return book_dict
 
     # load individual xml file to Doc NO and Text
@@ -62,9 +66,7 @@ class Token:
 
             # print("Processing file " + str(filename))
             book_dic = self.load_file(os.path.join(self.path, filename))
-            # for average token per book
-            self.num_book += 1
-            self.sum_token_book += len(book_dic)
+
             # merge books dict to a collection dict
             for key, value in book_dic.items():
                 # add token to dictionary if not exist
