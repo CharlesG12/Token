@@ -1,7 +1,8 @@
 import Main
 
 # path for the docs
-path = 'data/'
+# path = 'data/'
+path = 'D:\\Classes\\Information Retrival\\HW1\Token\\data\\'
 
 
 # print answers for Problem1
@@ -19,7 +20,7 @@ def print_info_token():
         print(str(key) + " " + str(value) + ", ", end="", flush=True)
 
     print()
-    print("The average token per book " + str(c.avg_word_doc))
+    print("The average token per book " + str(round(c.avg_word_doc, 2)))
 
 
 # print answers for Problem2
@@ -28,6 +29,7 @@ def print_info_stemming():
     c.run_stemming()
     c.cal_all()
     print()
+    print("The number of tokens in the collection: " + str(len(c.collection.collection_dic)))
     print("The number of distinct stems in the Cranfield text collection is: " + str(c.unique_words))
     print("The number of stems that occur only once in the Cranfield text collection: " + str(c.single_appear))
     print("The 30 most frequent stems in the Cranfield text collection: ", end="", flush=True)
@@ -35,7 +37,7 @@ def print_info_stemming():
         print(str(key) + " " + str(value) + ", ", end="", flush=True)
 
     print()
-    print("The average number of word stems per document is: " + str(c.avg_word_doc))
+    print("The average token per book " + str(round(c.avg_word_doc, 2)))
 
 
 print_info_token()

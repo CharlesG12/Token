@@ -38,7 +38,6 @@ class Token:
                     book_dict[processed_word] = [doc_no, book_dict[processed_word][1] + 1]
         return book_dict
 
-
     # load individual xml file to Doc NO and Text
     def load_file(self, url):
         # parse xml doc from the url
@@ -59,8 +58,10 @@ class Token:
     def run(self):
         # loop through files under path
         for filename in os.listdir(self.path):
+            # for filename in os.listdir(self.path):
+
             # print("Processing file " + str(filename))
-            book_dic = self.load_file(self.path + filename)
+            book_dic = self.load_file(os.path.join(self.path, filename))
             # for average token per book
             self.num_book += 1
             self.sum_token_book += len(book_dic)

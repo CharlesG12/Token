@@ -5,3 +5,5 @@ ps = PorterStemmer()
 
 def apply_stemming(word):
     return ps.stem(word)
+
+
