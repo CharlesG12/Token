@@ -4,6 +4,8 @@ import Main
 path = '/people/cs/s/sanda/cs6322/Cranfield/'
 # path = 'D:\\Classes\\Information Retrival\\HW1\Token\\data\\'
 
+doc_path = '/docs'
+
 
 # print answers for Problem1
 def print_info_token():
@@ -41,6 +43,10 @@ def print_info_stemming():
     print()
 
 
-print_info_token()
-print_info_stemming()
+c = Main.Collect(path)
+
+# print_info_token()
+# print_info_stemming()
+
+
 
